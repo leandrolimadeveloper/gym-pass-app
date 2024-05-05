@@ -1,0 +1,25 @@
+{
+  "name": "gym-pass-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch ./src/server.ts",
+    "start": "node build ./build/server.js",
+    "build": "tsup src --out-dir build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.8",
+    "tsup": "^8.0.2",
+    "tsx": "^4.9.1",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "dotenv": "16.4.5",
+    "fastify": "^4.26.2",
+    "zod": "3.23.6"
+  }
+}
