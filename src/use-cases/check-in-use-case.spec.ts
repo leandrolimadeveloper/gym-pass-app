@@ -17,8 +17,8 @@ describe('Check-in Use Case', async () => {
         inMemoryGymsRepository.items.push({
             id: 'gym-01',
             title: 'Academia do JS',
-            latitude: new Decimal(0),
-            longitude: new Decimal(0),
+            latitude: new Decimal(-3.8382335),
+            longitude: new Decimal(-49.680929),
             description: '',
             phone: ''
         })
@@ -34,8 +34,8 @@ describe('Check-in Use Case', async () => {
         const { checkIn } = await sut.execute({
             userId: 'user-01',
             gymId: 'gym-01',
-            userLatitude: 0,
-            userLongitude: 0
+            userLatitude: -3.8382335,
+            userLongitude: -49.680929
         })
 
         expect(checkIn.id).toEqual(expect.any(String))
@@ -47,16 +47,16 @@ describe('Check-in Use Case', async () => {
         await sut.execute({
             userId: 'user-01',
             gymId: 'gym-01',
-            userLatitude: 0,
-            userLongitude: 0
+            userLatitude: -3.8382335,
+            userLongitude: -49.680929
         })
 
         await expect(() =>
             sut.execute({
                 userId: 'user-01',
                 gymId: 'gym-01',
-                userLatitude: 0,
-                userLongitude: 0
+                userLatitude: -3.8382335,
+                userLongitude: -49.680929
             })
         ).rejects.toBeInstanceOf(Error)
     })
@@ -67,8 +67,8 @@ describe('Check-in Use Case', async () => {
         await sut.execute({
             userId: 'user-01',
             gymId: 'gym-01',
-            userLatitude: 0,
-            userLongitude: 0
+            userLatitude: -3.8382335,
+            userLongitude: -49.680929
         })
 
         vi.setSystemTime(new Date(2023, 0, 2, 8, 0, 0))
@@ -76,10 +76,30 @@ describe('Check-in Use Case', async () => {
         const { checkIn } = await sut.execute({
             userId: 'user-01',
             gymId: 'gym-01',
-            userLatitude: 0,
-            userLongitude: 0
+            userLatitude: -3.8382335,
+            userLongitude: -49.680929
         })
 
         expect(checkIn.id).toEqual(expect.any(String))
+    })
+
+    it('should not be able to check in a distant gym', async () => {
+        inMemoryGymsRepository.items.push({
+            id: 'gym-02',
+            title: 'Academia do JS',
+            latitude: new Decimal(-3.8382335),
+            longitude: new Decimal(-49.680929),
+            description: '',
+            phone: ''
+        })
+
+        await expect(() => 
+            sut.execute({
+                gymId: 'gym-02',
+                userId: 'user-01',
+                userLatitude: -3.8114712,
+                userLongitude: -49.6303747
+            })
+        ).rejects.toBeInstanceOf(Error)
     })
 })
