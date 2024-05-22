@@ -1,5 +1,4 @@
 import { Gym, Prisma } from '@prisma/client'
-import { Decimal } from '@prisma/client/runtime/library'
 import { FindManyNearbyParams, GymsRepository } from '../gyms-repository'
 import { prisma } from '@/lib/prisma'
 
